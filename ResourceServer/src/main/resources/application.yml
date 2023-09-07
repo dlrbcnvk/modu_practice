@@ -1,9 +1,2 @@
 server:
-  port: 8082
-
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://127.0.0.1:9000/oauth2/jwks
+  port: 8085
