@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +21,7 @@ public class ApiController {
     private final RestTemplate restTemplate;
 
     @GetMapping("/posts")
-    public ResponseEntity<List<Post>> getPosts(HttpServletRequest request) {
+    public ResponseEntity<List<PostDto>> getPosts(HttpServletRequest request) {
 
         Cookie[] cookies = request.getCookies();
         String access_token = null;
@@ -51,7 +48,7 @@ public class ApiController {
         HttpHeaders headers = new HttpHeaders();
         headers.put("Authorization", List.of("Bearer " + access_token));
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<List<Post>> response = restTemplate.exchange(uriString, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {});
+        ResponseEntity<List<PostDto>> response = restTemplate.exchange(uriString, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {});
 
         return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
     }

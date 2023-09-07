@@ -6,7 +6,7 @@
     <title>OAuth2 Client Home</title>
     <script>
         function getFreeResource() {
-            fetch("http://127.0.0.1:8082/", {
+            fetch("http://127.0.0.1:8082/free", {
                 method: "GET",
                 headers: {
                     Origin: "http://127.0.0.1:8082"
@@ -21,33 +21,32 @@
                 })
         }
 
-        function token() {
-            fetch("/http://127.0.0.1:8081/token")
-                .then(response => {
-                    response.json().then(function(data){
-                        console.log("text 안에 데이터 = " + data.message);
-                        window.localStorage.setItem("access_token", data.message);
-
-                    })
-                })
-        }
+        // function token() {
+        //     fetch("http://127.0.0.1:8081/token")
+        //         .then(response => {
+        //             response.json().then(function(data){
+        //                 console.log("text 안에 데이터 = " + data.message);
+        //                 window.localStorage.setItem("access_token", data.message);
+        //
+        //             })
+        //         })
+        // }
 
         function posts() {
-            var access_token = document.cookie.match("access_token");
-            console.log("access_token = " + access_token);
             fetch("/posts", {
                 method: "GET"
             })
                 .then(response => {
                     response.json().then(function (data) {
+                        console.log(data);
                         for (const prop in data) {
-                            document.querySelector("#posts").append("postId=" + data[prop].postId);
-                            document.querySelector("#posts").append(document.createElement('br'));
                             document.querySelector("#posts").append("title=" + data[prop].title);
                             document.querySelector("#posts").append(document.createElement('br'));
                             document.querySelector("#posts").append("content=" + data[prop].content);
                             document.querySelector("#posts").append(document.createElement('br'));
                             document.querySelector("#posts").append("username=" + data[prop].username);
+                            document.querySelector("#posts").append(document.createElement('br'));
+                            document.querySelector("#posts").append("updatedAt=" + data[prop].updatedAt);
                             document.querySelector("#posts").append(document.createElement('br'));
                             document.querySelector("#posts").append(document.createElement('br'));
                         }
@@ -79,7 +78,7 @@
 
     <div>
         <form action="#">
-            <p><input type="button" onclick="token()" value="access token"></p>
+<!--            <p><input type="button" onclick="token()" value="access token"></p>-->
             <p><input type="button" onclick="posts()" value="게시글"></p>
         </form>
 
